@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJK Consulting - Renforcer les compétences, développer le leadership</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="carousel.js" defer></script>   
+</head>
+<body>
+    <!-- Modal de prise de rendez-vous -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Prendre un rendez-vous</h2>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="appoint_name">Nom complet</label>
+                    <input type="text" id="appoint_name" name="appoint_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="appoint_email">Adresse email</label>
+                    <input type="email" id="appoint_email" name="appoint_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service concerné</label>
+                    <select id="service" name="service" required>
+                        <option value="">Sélectionnez un service</option>
+                        <option value="Communication Orale">Communication Orale</option>
+                        <option value="Leadership">Leadership</option>
+                        <option value="Entrepreneuriat">Entrepreneuriat</option>
+                        <option value="Dramathérapie">Dramathérapie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appoint_date">Date souhaitée</label>
+                    <input type="date" id="appoint_date" name="appoint_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="appoint_time">Heure souhaitée</label>
+                    <input type="time" id="appoint_time" name="appoint_time" required>
+                </div>
+                <button type="submit" class="btn-primary">Confirmer le rendez-vous</button>
+            </form>
+            <div id="confirmationMessage" class="confirmation-message">
+                <p>Redirection vers WhatsApp...</p>
+            </div>
+        </div>
+    </div>
+    <!-- Header et Navigation -->
+    <header id="home">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="assets/logo.png" alt="EZOUA Consulting">
+                 <span>EZOUA Consulting</span>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Accueil</a></li>
+                <li><a href="#about" class="nav-link">À propos</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#target" class="nav-link">Public Cible</a></li>
+                <li><a href="#results" class="nav-link">Résultats</a></li>
+                <li><a href="#team" class="nav-link">Équipe</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Carrousel de slides -->
+        <div class="carousel-container">
+        <div class="carousel-wrapper" role="region" aria-label="Carrousel d'images">
+                <div id="slide-0" class="slide active" role="group" aria-roledescription="slide" aria-label="Diapositive 1 sur 3" aria-hidden="false" style="background-image: url('assets/slide1.jpg')">
+                    <div class="slide-content">
+                        <h1>Renforcer les compétences, développer le leadership et accompagner l'entrepreneuriat.</h1>
+                        <p>Découvrez nos formations professionnelles adaptées à vos besoins</p>
+                        <a href="#contact" class="btn-primary">Nous contacter</a>
+                    </div>
+                </div>
+                <div id="slide-1" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 2 sur 3" aria-hidden="true" style="background-image: url('assets/slide2.png')">
+                    <div class="slide-content">
+                        <h1>Excellence en communication et leadership</h1>
+                        <p>Développez vos compétences de communication et de leadership avec nos experts</p>
+                        <a href="#services" class="btn-primary">Nos services</a>
+                    </div>
+                </div>
+                <div id="slide-2" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 3 sur 3" aria-hidden="true" style="background-image: url('assets/slide3.png')">
+                    <div class="slide-content">
+                        <h1>Accompagnement entrepreneurial personnalisé</h1>
+                        <p>Transformez vos idées en projets concrets avec notre accompagnement sur mesure</p>
+                        <a href="#about" class="btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Indicateurs de navigation -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0" title="Aller à la diapositive 1"></button>
+                <button class="indicator" data-slide="1" title="Aller à la diapositive 2"></button>
+                <button class="indicator" data-slide="2" title="Aller à la diapositive 3"></button>
+            </div>
+            
+            <!-- Flèches de navigation -->
+            <button class="carousel-nav prev" id="prevSlide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav next" id="nextSlide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Section À propos -->
+    <section id="about" class="section bg-primary">
+        <div class="container">
+            <h2 class="section-title">À propos de nous</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Contexte et Justification</h3>
+                    <p>JJK Consulting est né d'une volonté de répondre aux besoins croissants en développement de compétences professionnelles et personnelles. Notre cabinet se spécialise dans l'accompagnement des individus et des organisations pour renforcer leur potentiel et atteindre l'excellence.</p>
+                </div>
+                <div class="vision-box">
+                    <h3>Notre Vision</h3>
+                    <p>Devenir le partenaire de référence en matière de développement des compétences, de leadership et d'entrepreneuriat en Afrique et au-delà, en offrant des solutions innovantes et adaptées aux besoins spécifiques de nos clients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Services -->
+    <section id="services" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Nos Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Communication Orale</h3>
+                    <p>Maîtrisez l'art de la parole en public et développez votre éloquence pour captiver votre audience.</p>
+                    <button class="btn-appointment" data-service="Communication Orale">Prendre rendez-vous</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Leadership</h3>
+                    <p>Développez vos compétences de leader pour inspirer et guider efficacement votre équipe vers le succès.</p>
+                    <button class="btn-appointment" data-service="Leadership">Prendre rendez-vous</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Entrepreneuriat</h3>
+                    <p>Acquérez les connaissances et compétences essentielles pour lancer et développer votre entreprise.</p>
+                    <button class="btn-appointment" data-service="Entrepreneuriat">Prendre rendez-vous</button>
+                </div>
+                <div class="service-card highlight">
+                    <div class="service-icon">
+                        <i class="fas fa-theater-masks"></i>
+                    </div>
+                    <h3>Dramathérapie</h3>
+                    <p>Utilisez les techniques théâtrales comme outil thérapeutique pour le développement personnel et professionnel.</p>
+                    <button class="btn-appointment" data-service="Dramathérapie">Prendre rendez-vous</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Public Cible -->
+    <section id="target" class="section bg-white">
+        <div class="container">
+            <h2 class="section-title">Public Cible</h2>
+            <div class="target-grid">
+                <div class="target-item">
+                    <div class="target-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Étudiants</h3>
+                    <p>Préparation à la vie professionnelle et développement des compétences transversales.</p>
+                </div>
+                <div class="target-item">
+                    <div class="target-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Managers</h3>
+                    <p>Renforcement des compétences en leadership et en gestion d'équipe.</p>
+                </div>
+                <div class="target-item">
+                    <div class="target-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>ONG</h3>
+                    <p>Accompagnement dans la gestion de projets et le développement organisationnel.</p>
+                </div>
+                <div class="target-item">
+                    <div class="target-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Parents</h3>
+                    <p>Soutien dans l'éducation et la communication familiale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Résultats attendus -->
+    <section id="results" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Résultats Attendus</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Aisance à l'oral</h3>
+                    <p>Confiance en soi et maîtrise des techniques de communication orale.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Leadership</h3>
+                    <p>Capacité à inspirer, motiver et diriger efficacement des équipes.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Entrepreneuriat</h3>
+                    <p>Compétences pour créer et développer des projets entrepreneuriaux viables.</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Équilibre familial</h3>
+                    <p>Amélioration de la communication et des relations au sein de la famille.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Équipe -->
+    <section id="team" class="section bg-primary">
+        <div class="container">
+            <h2 class="section-title">Notre Équipe</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-img">
+                        <div class="avatar">JK</div>
+                    </div>
+                    <h3>Jean Jacques KODJO</h3>
+                    <p class="member-role">Directeur / CEO</p>
+                    <p class="member-desc">Fondateur et visionnaire de JJK Consulting, expert en leadership et communication.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <div class="avatar">MS</div>
+                    </div>
+                    <h3>Marie Jocelyne SONAN</h3>
+                    <p class="member-role">Coordinatrice Générale</p>
+                    <p class="member-desc">Spécialiste en gestion de projets et coordination d'équipes multidisciplinaires.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <div class="avatar">FC</div>
+                    </div>
+                    <h3>Formateurs certifiés</h3>
+                    <p class="member-role">Experts en formation</p>
+                    <p class="member-desc">Équipe de formateurs qualifiés dans divers domaines de compétences.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <div class="avatar">CS</div>
+                    </div>
+                    <h3>Consultants spécialisés</h3>
+                    <p class="member-role">Experts-conseils</p>
+                    <p class="member-desc">Consultants spécialisés dans différents secteurs pour un accompagnement personnalisé.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="section bg-white">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Centre d'Excellence DAVID Abidjan, Yopougon Millionnaire</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>(+225) 0779919121 / 0574742526 / 2735975765</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>jjk.consulting@outlook.fr</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Votre email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Votre message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>JJK Consulting</h3>
+                    <p>Renforcer les compétences, développer le leadership</p>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; JJK Consulting - 2025. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bouton retour en haut -->
+    <a href="#home" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts chargés en head avec defer -->
+</body>
+</html>

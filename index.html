@@ -3,171 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JJK Consulting - Renforcer les compétences, développer le leadership</title>
+    <title>EZOUA Consulting | Formation, coaching et conseil à Abidjan</title>
+    <meta name="description" content="À Abidjan, EZOUA Consulting accompagne particuliers, entrepreneurs et organisations en communication orale, leadership, entrepreneuriat, formation, coaching et conseil.">
+    <meta name="theme-color" content="#0b1e36">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_CI">
+    <meta property="og:site_name" content="EZOUA Consulting">
+    <meta property="og:title" content="EZOUA Consulting | Révéler les potentiels">
+    <meta property="og:description" content="Formation, coaching et conseil à Abidjan : développons les compétences et le leadership pour créer de l’impact.">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preload" as="image" href="assets/slide1.webp" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
     <script src="script.js" defer></script>
     <script src="carousel.js" defer></script>   
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "EZOUA CONSULTING",
+            "description": "Cabinet de formation, de coaching et de conseil à Abidjan.",
+            "email": "ezoua.consulting@outlook.com",
+            "telephone": ["+2250799490505", "+2250574742526", "+2252735975765"],
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Centre d’Excellence DAVID, Yopougon Millionnaire",
+                "addressLocality": "Abidjan",
+                "addressCountry": "CI"
+            },
+            "areaServed": { "@type": "Country", "name": "Côte d’Ivoire" }
+        }
+        </script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
     <!-- Modal de prise de rendez-vous -->
-    <div id="appointmentModal" class="modal">
+    <div id="appointmentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Prendre un rendez-vous</h2>
+            <button type="button" class="close-modal" aria-label="Fermer la fenêtre de rendez-vous">&times;</button>
+            <div class="modal-header">
+                <div class="modal-badge"><i class="fas fa-calendar-alt"></i> Prise de Contact Rapide</div>
+                <h2 id="modalTitle">Prendre un rendez-vous</h2>
+                <p class="modal-subtitle">Un message prérempli s’ouvrira dans WhatsApp. Vous pourrez le vérifier et l’envoyer depuis l’application.</p>
+            </div>
             <form id="appointmentForm">
                 <div class="form-group">
-                    <label for="appoint_name">Nom complet</label>
-                    <input type="text" id="appoint_name" name="appoint_name" required>
+                    <label for="appoint_name">Nom complet <span class="required">*</span></label>
+                    <input type="text" id="appoint_name" name="appoint_name" placeholder="Ex. Jean-Luc Kouamé" required autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <label for="appoint_email">Adresse email</label>
-                    <input type="email" id="appoint_email" name="appoint_email" required>
+                    <label for="appoint_email">Adresse email <span class="required">*</span></label>
+                    <input type="email" id="appoint_email" name="appoint_email" placeholder="Ex. kouame@exemple.com" required autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label for="service">Service concerné</label>
+                    <label for="service">Domaine ou Solution concerné <span class="required">*</span></label>
                     <select id="service" name="service" required>
                         <option value="">Sélectionnez un service</option>
-                        <option value="Communication Orale">Communication Orale</option>
-                        <option value="Leadership">Leadership</option>
-                        <option value="Entrepreneuriat">Entrepreneuriat</option>
-                        <option value="Dramathérapie">Dramathérapie</option>
+                        <option value="Communication Orale">01. Communication Orale</option>
+                        <option value="Leadership">02. Leadership</option>
+                        <option value="Entrepreneuriat">03. Entrepreneuriat</option>
+                        <option value="Dramathérapie & Accompagnement">04. Dramathérapie & Accompagnement</option>
+                        <option value="Formation">Formation Professionnelle</option>
+                        <option value="Coaching">Coaching / Executive Coaching</option>
+                        <option value="Conseil">Conseil aux Organisations</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="appoint_date">Date souhaitée</label>
-                    <input type="date" id="appoint_date" name="appoint_date" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="appoint_date">Date souhaitée <span class="required">*</span></label>
+                        <input type="date" id="appoint_date" name="appoint_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="appoint_time">Heure souhaitée <span class="required">*</span></label>
+                        <input type="time" id="appoint_time" name="appoint_time" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="appoint_time">Heure souhaitée</label>
-                    <input type="time" id="appoint_time" name="appoint_time" required>
-                </div>
-                <button type="submit" class="btn-primary">Confirmer le rendez-vous</button>
+                <button type="submit" class="btn-primary btn-submit-appointment">
+                    <i class="fab fa-whatsapp"></i> Confirmer et ouvrir WhatsApp
+                </button>
             </form>
-            <div id="confirmationMessage" class="confirmation-message">
-                <p>Redirection vers WhatsApp...</p>
+            <div id="confirmationMessage" class="confirmation-message" aria-live="polite">
+                <div class="redirect-spinner"><i class="fab fa-whatsapp"></i></div>
+                <p class="redirect-title">Ouverture de WhatsApp en cours...</p>
+                <p class="redirect-sub">Vous devrez confirmer l’envoi du message dans WhatsApp.</p>
             </div>
         </div>
     </div>
     <!-- Header et Navigation -->
-    <header id="home">
-        <nav class="navbar">
+    <header class="site-header">
+        <nav class="navbar" aria-label="Navigation principale">
             <div class="logo">
-                <img src="assets/logo.png" alt="EZOUA Consulting">
-                 <span>EZOUA Consulting</span>
+                <img src="assets/logo.png" alt="Logo EZOUA Consulting">
+                <span class="brand-name">EZOUA <span class="brand-highlight">Consulting</span></span>
             </div>
-            <div class="menu-toggle" id="mobile-menu">
+            <button class="menu-toggle" id="mobile-menu" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="primary-nav">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-            </div>
-            <ul class="nav-menu">
+            </button>
+            <ul class="nav-menu" id="primary-nav">
                 <li><a href="#home" class="nav-link active">Accueil</a></li>
                 <li><a href="#about" class="nav-link">À propos</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#target" class="nav-link">Public Cible</a></li>
-                <li><a href="#results" class="nav-link">Résultats</a></li>
-                <li><a href="#team" class="nav-link">Équipe</a></li>
+                <li><a href="#services" class="nav-link">Nos domaines</a></li>
+                <li><a href="#solutions" class="nav-link">Nos solutions</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="nav-cta-item">
+                    <button class="btn-nav-appointment btn-appointment" data-service="">Demander un accompagnement</button>
+                </li>
             </ul>
         </nav>
-        <!-- Carrousel de slides -->
+    </header>
+
+    <!-- Section Hero & Carrousel de slides -->
+    <main id="main-content" tabindex="-1">
+    <section id="home" class="hero-section">
         <div class="carousel-container">
-        <div class="carousel-wrapper" role="region" aria-label="Carrousel d'images">
-                <div id="slide-0" class="slide active" role="group" aria-roledescription="slide" aria-label="Diapositive 1 sur 3" aria-hidden="false" style="background-image: url('assets/slide1.jpg')">
+            <div class="carousel-wrapper" role="region" aria-label="Carrousel de présentation">
+                <div id="slide-0" class="slide active" role="group" aria-roledescription="slide" aria-label="Diapositive 1 sur 3" aria-hidden="false" style="background-image: url('assets/slide1.webp')">
                     <div class="slide-content">
-                        <h1>Renforcer les compétences, développer le leadership et accompagner l'entrepreneuriat.</h1>
-                        <p>Découvrez nos formations professionnelles adaptées à vos besoins</p>
-                        <a href="#contact" class="btn-primary">Nous contacter</a>
+                        <span class="hero-badge"><i class="fas fa-certificate"></i> Cabinet de Formation, Coaching & Conseil</span>
+                        <h1>Révélez votre potentiel.<br>Développez votre leadership.<br>Créez de l’impact.</h1>
+                        <p>EZOUA Consulting accompagne les individus, les entrepreneurs et les organisations à travers la formation, le coaching et le conseil pour développer les compétences et transformer les ambitions en résultats.</p>
+                        <div class="hero-actions">
+                            <a href="#solutions" class="btn-primary"><i class="fas fa-arrow-right" aria-hidden="true"></i> Découvrir nos solutions</a>
+                            <a href="#contact" class="btn-secondary"><i class="fas fa-comment-dots" aria-hidden="true"></i> Parlons de votre projet</a>
+                        </div>
                     </div>
                 </div>
-                <div id="slide-1" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 2 sur 3" aria-hidden="true" style="background-image: url('assets/slide2.png')">
+                <div id="slide-1" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 2 sur 3" aria-hidden="true" style="background-image: url('assets/slide2.webp')">
                     <div class="slide-content">
-                        <h1>Excellence en communication et leadership</h1>
-                        <p>Développez vos compétences de communication et de leadership avec nos experts</p>
-                        <a href="#services" class="btn-primary">Nos services</a>
+                        <span class="hero-badge"><i class="fas fa-bullhorn"></i> 01. Communication Orale</span>
+                        <h2>Prendre la parole avec assurance. Convaincre avec impact.</h2>
+                        <p>Faites de la parole un véritable outil de conviction, d’éloquence et d’influence pour vos présentations, médias et négociations.</p>
+                        <div class="hero-actions">
+                            <a href="#services" class="btn-primary"><i class="fas fa-arrow-right"></i> Découvrir nos parcours</a>
+                            <button class="btn-secondary btn-appointment" data-service="Communication Orale"><i class="fas fa-calendar-check"></i> Prendre rendez-vous</button>
+                        </div>
                     </div>
                 </div>
-                <div id="slide-2" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 3 sur 3" aria-hidden="true" style="background-image: url('assets/slide3.png')">
+                <div id="slide-2" class="slide" role="group" aria-roledescription="slide" aria-label="Diapositive 3 sur 3" aria-hidden="true" style="background-image: url('assets/slide3.webp')">
                     <div class="slide-content">
-                        <h1>Accompagnement entrepreneurial personnalisé</h1>
-                        <p>Transformez vos idées en projets concrets avec notre accompagnement sur mesure</p>
-                        <a href="#about" class="btn-primary">En savoir plus</a>
+                        <span class="hero-badge"><i class="fas fa-crown"></i> 02. Leadership & Performance</span>
+                        <h2>Développer une posture de leader et mobiliser autour d’une vision.</h2>
+                        <p>Des parcours d’impact pour professionnels, entrepreneurs, jeunes leaders, managers et dirigeants.</p>
+                        <div class="hero-actions">
+                            <a href="#solutions" class="btn-primary"><i class="fas fa-info-circle"></i> Nos solutions</a>
+                            <button class="btn-secondary btn-appointment" data-service="Leadership"><i class="fas fa-calendar-check"></i> Prendre rendez-vous</button>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Indicateurs de navigation -->
-            <div class="carousel-indicators">
-                <button class="indicator active" data-slide="0" title="Aller à la diapositive 1"></button>
-                <button class="indicator" data-slide="1" title="Aller à la diapositive 2"></button>
-                <button class="indicator" data-slide="2" title="Aller à la diapositive 3"></button>
+            <div class="carousel-indicators" role="group" aria-label="Choisir une présentation">
+                <button type="button" class="indicator active" data-slide="0" aria-label="Afficher la présentation 1" aria-pressed="true"></button>
+                <button type="button" class="indicator" data-slide="1" aria-label="Afficher la présentation 2" aria-pressed="false"></button>
+                <button type="button" class="indicator" data-slide="2" aria-label="Afficher la présentation 3" aria-pressed="false"></button>
             </div>
             
             <!-- Flèches de navigation -->
-            <button class="carousel-nav prev" id="prevSlide">
-                <i class="fas fa-chevron-left"></i>
+            <button class="carousel-nav prev" id="prevSlide" aria-label="Diapositive précédente">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
-            <button class="carousel-nav next" id="nextSlide">
-                <i class="fas fa-chevron-right"></i>
+            <button class="carousel-nav next" id="nextSlide" aria-label="Diapositive suivante">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </button>
         </div>
-    </header>
+    </section>
 
-    <!-- Section À propos -->
+    <!-- Section À propos & Vision -->
     <section id="about" class="section bg-primary">
         <div class="container">
-            <h2 class="section-title">À propos de nous</h2>
+            <h2 class="section-title" data-animate="fade-up">Nous révélons les potentiels et développons les compétences.</h2>
+            <p class="section-subtitle">Un accompagnement humain, exigeant et adapté aux réalités des individus et des organisations.</p>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Contexte et Justification</h3>
-                    <p>JJK Consulting est né d'une volonté de répondre aux besoins croissants en développement de compétences professionnelles et personnelles. Notre cabinet se spécialise dans l'accompagnement des individus et des organisations pour renforcer leur potentiel et atteindre l'excellence.</p>
+                    <div class="about-card-inner">
+                        <span class="badge-tag"><i class="fas fa-compass"></i> Notre Identité</span>
+                        <h3>Cabinet de Formation, de Coaching et de Conseil</h3>
+                        <p>EZOUA Consulting est un cabinet de formation, de coaching et de conseil. Nous accompagnons les individus, les dirigeants, les équipes et les entrepreneurs dans le développement de leur vision, de leur potentiel et de leur leadership. Notre approche associe écoute, pratique et accompagnement personnalisé, au plus près des réalités professionnelles et sociales.</p>
+                    </div>
                 </div>
                 <div class="vision-box">
-                    <h3>Notre Vision</h3>
-                    <p>Devenir le partenaire de référence en matière de développement des compétences, de leadership et d'entrepreneuriat en Afrique et au-delà, en offrant des solutions innovantes et adaptées aux besoins spécifiques de nos clients.</p>
+                    <div class="vision-card-inner">
+                        <span class="badge-tag gold"><i class="fas fa-eye"></i> Notre Cap Stratégique</span>
+                        <h3>Notre Vision</h3>
+                        <p>Faire de chaque individu et de chaque organisation un acteur autonome, performant et impactant dans son environnement professionnel et social, à travers l’excellence.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Piliers d'approche corporate -->
+            <div class="about-pillars">
+                    <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-award"></i></div>
+                    <h4>Expertise & Rigueur</h4>
+                    <p>Une expertise mobilisée avec exigence et des contenus pensés pour vos enjeux.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-handshake"></i></div>
+                    <h4>Proximité & Écoute</h4>
+                    <p>Un accompagnement attentif ancré dans la réalité de vos enjeux et de vos équipes.</p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h4>Pratique & Transformation</h4>
+                    <p>Des apprentissages opérationnels orientés vers des résultats concrets et durables.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Services -->
+    <!-- Section Nos Valeurs -->
+    <section id="values" class="section bg-primary" style="padding-top: 0; background: linear-gradient(180deg, var(--navy-850) 0%, var(--navy-950) 100%);">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">Nos Valeurs Fondatrices</h2>
+            <p class="section-subtitle">Les 4 principes cardinaux qui guident chacune de nos actions et interventions</p>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-medal"></i></div>
+                    <h3>Excellence</h3>
+                        <p>Le souci de qualité dans la conception et l’animation de nos parcours d’accompagnement.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Impact</h3>
+                        <p>Des interventions tournées vers une contribution utile dans les parcours personnels et professionnels.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Humanité</h3>
+                    <p>L'empathie, le respect profond et la bienveillance au cœur de chaque relation humaine et managériale.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Transformation</h3>
+                        <p>Accompagner l’évolution des postures individuelles et collectives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4 Domaines d'intervention -->
     <section id="services" class="section bg-light">
         <div class="container">
-            <h2 class="section-title">Nos Services</h2>
+            <h2 class="section-title" data-animate="fade-up">Nos 4 Domaines d'Intervention</h2>
+            <p class="section-subtitle">Une offre complète et ciblée pour libérer vos potentiels et catalyser vos performances</p>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" id="communication-orale">
                     <div class="service-icon">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-bullhorn" aria-hidden="true"></i>
                     </div>
+                    <span class="service-tagline">01. Prise de parole & influence</span>
                     <h3>Communication Orale</h3>
-                    <p>Maîtrisez l'art de la parole en public et développez votre éloquence pour captiver votre audience.</p>
+                    <p>Prendre la parole avec assurance. Convaincre avec impact. Le cabinet développe des parcours permettant de faire de la parole un véritable outil de conviction.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Art oratoire & éloquence</li>
+                        <li><i class="fas fa-check"></i> Prise de parole en public</li>
+                        <li><i class="fas fa-check"></i> Communication professionnelle</li>
+                        <li><i class="fas fa-check"></i> Gestion du stress & posture</li>
+                        <li><i class="fas fa-check"></i> Pitch et présentation à fort enjeu</li>
+                        <li><i class="fas fa-check"></i> Entretien et négociation</li>
+                        <li><i class="fas fa-check"></i> Média Training exécutif</li>
+                    </ul>
+                    <div class="service-quote">« Faire de la parole un véritable outil de conviction et d’influence. »</div>
+                    <a class="service-discover" href="#contact" data-interest="Communication orale">Découvrir ce domaine <span aria-hidden="true">→</span></a>
                     <button class="btn-appointment" data-service="Communication Orale">Prendre rendez-vous</button>
                 </div>
-                <div class="service-card">
+                <div class="service-card" id="leadership">
                     <div class="service-icon">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-crown" aria-hidden="true"></i>
                     </div>
+                    <span class="service-tagline">02. Posture & mobilisation</span>
                     <h3>Leadership</h3>
-                    <p>Développez vos compétences de leader pour inspirer et guider efficacement votre équipe vers le succès.</p>
+                    <p>Développer une posture de leader et mobiliser autour d’une vision, dans les contextes personnels et professionnels.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Développement personnel & affirmation</li>
+                        <li><i class="fas fa-check"></i> Motivation et engagement des équipes</li>
+                        <li><i class="fas fa-check"></i> Management opérationnel & stratégique</li>
+                        <li><i class="fas fa-check"></i> Orientation et projet de vie</li>
+                        <li><i class="fas fa-check"></i> Leadership d’impact</li>
+                        <li><i class="fas fa-check"></i> Gestion de crise et résilience</li>
+                        <li><i class="fas fa-check"></i> Intelligence émotionnelle & performance</li>
+                    </ul>
+                    <div class="service-quote">« S'adresse aux professionnels, entrepreneurs, jeunes leaders, managers et dirigeants. »</div>
+                    <a class="service-discover" href="#contact" data-interest="Leadership">Découvrir ce domaine <span aria-hidden="true">→</span></a>
                     <button class="btn-appointment" data-service="Leadership">Prendre rendez-vous</button>
                 </div>
-                <div class="service-card">
+                <div class="service-card" id="entrepreneuriat">
                     <div class="service-icon">
-                        <i class="fas fa-briefcase"></i>
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
                     </div>
+                    <span class="service-tagline">03. Incubation & croissance</span>
                     <h3>Entrepreneuriat</h3>
-                    <p>Acquérez les connaissances et compétences essentielles pour lancer et développer votre entreprise.</p>
+                    <p>Transformer une idée en projet et structurer les étapes de développement de votre activité.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Développement d’idées d’entreprise</li>
+                        <li><i class="fas fa-check"></i> Création et structuration de projets</li>
+                        <li><i class="fas fa-check"></i> Management entrepreneurial</li>
+                        <li><i class="fas fa-check"></i> Stratégie de développement commercial</li>
+                        <li><i class="fas fa-check"></i> Professionnalisation des activités</li>
+                    </ul>
+                    <div class="service-quote">« Accompagne les porteurs de vision comme les entrepreneurs en activité ou en relance. »</div>
+                    <a class="service-discover" href="#contact" data-interest="Entrepreneuriat">Découvrir ce domaine <span aria-hidden="true">→</span></a>
                     <button class="btn-appointment" data-service="Entrepreneuriat">Prendre rendez-vous</button>
                 </div>
-                <div class="service-card highlight">
+                <div class="service-card highlight" id="dramatherapie-accompagnement">
+                    <span class="service-badge-highlight"><i class="fas fa-star"></i> Accompagnement dédié</span>
                     <div class="service-icon">
-                        <i class="fas fa-theater-masks"></i>
+                        <i class="fas fa-theater-masks" aria-hidden="true"></i>
                     </div>
-                    <h3>Dramathérapie</h3>
-                    <p>Utilisez les techniques théâtrales comme outil thérapeutique pour le développement personnel et professionnel.</p>
-                    <button class="btn-appointment" data-service="Dramathérapie">Prendre rendez-vous</button>
+                    <span class="service-tagline">04. Confiance & épanouissement</span>
+                    <h3>Dramathérapie & Accompagnement</h3>
+                    <p>Favoriser l’expression, la confiance et l’épanouissement personnel et collectif à travers la dramathérapie et un accompagnement adapté.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Accompagnement psychoaffectif des enfants et adolescents</li>
+                        <li><i class="fas fa-check"></i> Soutien psychosocial des organisations</li>
+                        <li><i class="fas fa-check"></i> Accompagnement psychothérapeutique individuel</li>
+                    </ul>
+                    <div class="service-quote">« Un espace d’expression et d’accompagnement adapté aux besoins exprimés. »</div>
+                    <a class="service-discover" href="#contact" data-interest="Dramathérapie et accompagnement">Découvrir ce domaine <span aria-hidden="true">→</span></a>
+                    <button class="btn-appointment" data-service="Dramathérapie & Accompagnement">Prendre rendez-vous</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Des Solutions Adaptées à vos Enjeux -->
+    <section id="solutions" class="section bg-white">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">Des Solutions Adaptées à vos Enjeux</h2>
+            <p class="section-subtitle">Trois formats d'intervention complémentaires au service de vos objectifs</p>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <span class="solution-badge-num">01. Pédagogie active</span>
+                            <h3>Formation</h3>
+                        </div>
+                    </div>
+                    <p>Des formations pratiques et adaptées aux besoins spécifiques des particuliers et des organisations professionnelles, axées sur l’acquisition de réflexes immédiatement mobilisables.</p>
+                    <div class="solution-tags">
+                        <span class="solution-tag">Ateliers pratiques</span>
+                        <span class="solution-tag">Inter & Intra</span>
+                        <span class="solution-tag">Cas réels</span>
+                        <span class="solution-tag">Formation intra-entreprise</span>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon"><i class="fas fa-user-tie"></i></div>
+                        <div>
+                            <span class="solution-badge-num">02. Accompagnement sur-mesure</span>
+                            <h3>Coaching</h3>
+                        </div>
+                    </div>
+                    <p>Un accompagnement personnalisé pour développer le potentiel, la posture et la performance. Des dispositifs dédiés aux dirigeants, cadres, managers, chefs d’équipe et porteurs de projets.</p>
+                    <div class="solution-tags">
+                        <span class="solution-tag">Coaching individuel</span>
+                        <span class="solution-tag">Coaching collectif de dirigeants</span>
+                        <span class="solution-tag">Executive coaching</span>
+                    </div>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-header">
+                        <div class="solution-icon"><i class="fas fa-briefcase"></i></div>
+                        <div>
+                            <span class="solution-badge-num">03. Stratégie & Organisation</span>
+                            <h3>Conseil</h3>
+                        </div>
+                    </div>
+                    <p>Des interventions ciblées pour accompagner les organisations dans leurs enjeux de développement, d'optimisation de gouvernance et de professionnalisation globale.</p>
+                    <div class="solution-tags">
+                        <span class="solution-tag">Diagnostic stratégique</span>
+                        <span class="solution-tag">Conduite du changement</span>
+                        <span class="solution-tag">Développement pérenne</span>
+                    </div>
+                </div>
+            </div>
+            <div class="solutions-cta">
+                <p>Chaque besoin est différent. Échangeons pour identifier le format adapté à votre situation.</p>
+                <a class="btn-primary" href="#contact">Demander un accompagnement personnalisé</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Pourquoi Choisir EZOUA Consulting ? -->
+    <section id="why-us" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title" data-animate="fade-up">Pourquoi Choisir EZOUA Consulting ?</h2>
+            <p class="section-subtitle">Des repères qui guident nos interventions et notre relation avec chaque bénéficiaire.</p>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-check"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h4>Approche humaine & personnalisée</h4>
+                        <p>Une écoute attentive à chaque étape de votre progression.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-check"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h4>Formations pratiques & opérationnelles</h4>
+                        <p>Des contenus pratiques et opérationnels adaptés aux besoins exprimés.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-check"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h4>Expertise en communication, leadership & entrepreneuriat</h4>
+                        <p>Des domaines d’intervention complémentaires au service de votre évolution.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-check"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h4>Solutions pour particuliers & organisations</h4>
+                        <p>Des parcours modulables adaptés à toutes les échelles d'enjeux.</p>
+                    </div>
+                </div>
+                <div class="why-item" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto; width: 100%;">
+                    <div class="why-check"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h4>Accompagnement orienté transformation & impact</h4>
+                        <p>Un accompagnement tourné vers la transformation et la création d’impact.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bannière d'appel à l'action -->
+            <div class="why-banner-cta">
+                <h3>Prêt à passer au niveau supérieur ?</h3>
+                <p>Développez vos compétences, renforcez votre leadership ou donnez une nouvelle dimension à votre activité avec EZOUA Consulting.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-appointment" data-service=""><i class="fas fa-calendar-check" aria-hidden="true"></i> Demander un accompagnement</button>
+                    <a href="#contact" class="btn-secondary"><i class="fas fa-envelope" aria-hidden="true"></i> Nous contacter</a>
                 </div>
             </div>
         </div>
@@ -176,7 +449,8 @@
     <!-- Section Public Cible -->
     <section id="target" class="section bg-white">
         <div class="container">
-            <h2 class="section-title">Public Cible</h2>
+            <h2 class="section-title" data-animate="fade-up">Public Cible</h2>
+            <p class="section-subtitle">Particuliers, étudiants, entrepreneurs et organisations : des solutions pensées selon les besoins de chacun.</p>
             <div class="target-grid">
                 <div class="target-item">
                     <div class="target-icon">
@@ -206,6 +480,16 @@
                     <h3>Parents</h3>
                     <p>Soutien dans l'éducation et la communication familiale.</p>
                 </div>
+                <div class="target-item">
+                    <div class="target-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
+                    <h3>Entrepreneurs</h3>
+                    <p>Accompagnement des porteurs de projets et des activités en développement.</p>
+                </div>
+                <div class="target-item">
+                    <div class="target-icon"><i class="fas fa-building" aria-hidden="true"></i></div>
+                    <h3>Entreprises & équipes</h3>
+                    <p>Formation et accompagnement adaptés aux enjeux des organisations.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -213,7 +497,8 @@
     <!-- Section Résultats attendus -->
     <section id="results" class="section bg-light">
         <div class="container">
-            <h2 class="section-title">Résultats Attendus</h2>
+            <h2 class="section-title" data-animate="fade-up">Résultats Attendus</h2>
+            <p class="section-subtitle">Des axes de progression au cœur des accompagnements proposés.</p>
             <div class="results-grid">
                 <div class="result-card">
                     <div class="result-icon">
@@ -240,8 +525,8 @@
                     <div class="result-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3>Équilibre familial</h3>
-                    <p>Amélioration de la communication et des relations au sein de la famille.</p>
+                    <h3>Expression & accompagnement</h3>
+                    <p>Accompagnement psychoaffectif des enfants et adolescents selon les besoins exprimés.</p>
                 </div>
             </div>
         </div>
@@ -250,39 +535,48 @@
     <!-- Section Équipe -->
     <section id="team" class="section bg-primary">
         <div class="container">
-            <h2 class="section-title">Notre Équipe</h2>
+            <h2 class="section-title" data-animate="fade-up">Une équipe mobilisée autour de vos enjeux</h2>
+            <p class="section-subtitle">Des interlocuteurs pour vous accompagner dans votre démarche.</p>
             <div class="team-grid">
                 <div class="team-member">
                     <div class="member-img">
-                        <div class="avatar">JK</div>
+                        <div class="avatar-wrapper">
+                            <img src="assets/member-jk.webp" alt="Jean Jacques KODJO - Directeur CEO" class="avatar-photo" width="120" height="120" loading="lazy">
+                        </div>
                     </div>
                     <h3>Jean Jacques KODJO</h3>
                     <p class="member-role">Directeur / CEO</p>
-                    <p class="member-desc">Fondateur et visionnaire de JJK Consulting, expert en leadership et communication.</p>
+                    <p class="member-desc">Interventions en leadership et communication.</p>
                 </div>
                 <div class="team-member">
                     <div class="member-img">
-                        <div class="avatar">MS</div>
+                        <div class="avatar-wrapper">
+                            <img src="assets/member-ms.webp" alt="Marie Jocelyne SONAN - Coordinatrice Générale" class="avatar-photo" width="120" height="120" loading="lazy">
+                        </div>
                     </div>
                     <h3>Marie Jocelyne SONAN</h3>
                     <p class="member-role">Coordinatrice Générale</p>
-                    <p class="member-desc">Spécialiste en gestion de projets et coordination d'équipes multidisciplinaires.</p>
+                    <p class="member-desc">Coordination générale des activités du cabinet.</p>
                 </div>
                 <div class="team-member">
                     <div class="member-img">
-                        <div class="avatar">FC</div>
+                        <div class="avatar-wrapper">
+                            <img src="assets/member-fc.webp" alt="Formateur d’EZOUA Consulting" class="avatar-photo" width="120" height="120" loading="lazy">
+                        </div>
                     </div>
-                    <h3>Formateurs certifiés</h3>
+                    <h3>Formateurs</h3>
                     <p class="member-role">Experts en formation</p>
-                    <p class="member-desc">Équipe de formateurs qualifiés dans divers domaines de compétences.</p>
+                    <p class="member-desc">Interventions en formation selon les besoins définis.</p>
                 </div>
                 <div class="team-member">
                     <div class="member-img">
-                        <div class="avatar">CS</div>
+                        <div class="avatar-wrapper">
+                            <img src="assets/member-cs.webp" alt="Consultants spécialisés - Experts-conseils" class="avatar-photo" width="120" height="120" loading="lazy">
+                        </div>
                     </div>
                     <h3>Consultants spécialisés</h3>
                     <p class="member-role">Experts-conseils</p>
-                    <p class="member-desc">Consultants spécialisés dans différents secteurs pour un accompagnement personnalisé.</p>
+                    <p class="member-desc">Accompagnement et conseil selon les enjeux des organisations.</p>
                 </div>
             </div>
         </div>
@@ -291,64 +585,138 @@
     <!-- Section Contact -->
     <section id="contact" class="section bg-white">
         <div class="container">
-            <h2 class="section-title">Contactez-nous</h2>
+            <h2 class="section-title" data-animate="fade-up">Contactez-nous</h2>
+            <p class="section-subtitle">Échangeons sur vos besoins et vos projets</p>
             <div class="contact-container">
                 <div class="contact-info">
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Centre d'Excellence DAVID Abidjan, Yopougon Millionnaire</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <p>(+225) 0779919121 / 0574742526 / 2735975765</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>jjk.consulting@outlook.fr</p>
+                    <div class="contact-info-card">
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">Adresse de notre cabinet</span>
+                                <p>Centre d'Excellence DAVID Abidjan, Yopougon Millionnaire</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">Lignes téléphoniques</span>
+                                <p>
+                                    <a href="tel:+2250799490505">(+225) 07 99 49 05 05</a> / 
+                                    <a href="tel:+2250574742526">05 74 74 25 26</a> / 
+                                    <a href="tel:+2252735975765">27 35 97 57 65</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fas fa-envelope" aria-hidden="true"></i></div>
+                            <div class="info-text">
+                                <span class="info-label">Courriel professionnel</span>
+                                <p><a href="mailto:ezoua.consulting@outlook.com">ezoua.consulting@outlook.com</a></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                    <form id="contactForm" method="POST" action="contact.php">
+                        <!-- Champ honeypot invisible anti-spam pour les robots -->
+                        <div class="honeypot" aria-hidden="true">
+                            <label for="_website_check">Ne pas remplir ce champ</label>
+                            <input type="text" name="_website_check" id="_website_check" tabindex="-1" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Votre email" required>
+                            <label for="name">Votre nom complet <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Ex. Jean-Luc Koffi" autocomplete="name" minlength="2" maxlength="120" required>
                         </div>
                         <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Votre message" required></textarea>
+                            <label for="email">Votre adresse email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="Ex. contact@votre-entreprise.com" autocomplete="email" maxlength="254" required>
                         </div>
-                        <button type="submit" class="btn-primary">Envoyer</button>
+                        <div class="form-group">
+                            <label for="phone">Téléphone <span class="optional">(facultatif)</span></label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="30" placeholder="Ex. +225 07 00 00 00 00">
+                        </div>
+                        <div class="form-group">
+                            <label for="organization">Organisation <span class="optional">(facultatif)</span></label>
+                            <input type="text" id="organization" name="organization" autocomplete="organization" maxlength="150">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">Domaine d’intérêt</label>
+                            <select id="interest" name="interest">
+                                <option value="">Sélectionnez un domaine</option>
+                                <option>Communication orale</option>
+                                <option>Leadership</option>
+                                <option>Entrepreneuriat</option>
+                                <option>Dramathérapie et accompagnement</option>
+                                <option>Autre demande</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="request_type">Type d’accompagnement</label>
+                            <select id="request_type" name="request_type">
+                                <option value="">Sélectionnez une solution</option>
+                                <option>Formation</option>
+                                <option>Coaching individuel</option>
+                                <option>Coaching collectif / executive coaching</option>
+                                <option>Conseil</option>
+                                <option>Autre demande</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Votre message <span class="required">*</span></label>
+                            <textarea id="message" name="message" rows="5" minlength="10" maxlength="5000" placeholder="Décrivez votre besoin en formation, coaching ou accompagnement..." required></textarea>
+                        </div>
+                        <div id="contactStatus" class="contact-status" aria-live="polite"></div>
+                        <button type="submit" class="btn-primary btn-submit-contact" id="contactSubmitBtn">
+                            <i class="fas fa-paper-plane btn-icon" aria-hidden="true"></i> 
+                            <span class="btn-text">Envoyer le message</span>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
+    </main>
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>JJK Consulting</h3>
-                    <p>Renforcer les compétences, développer le leadership</p>
+                <div class="footer-brand">
+                    <h3>EZOUA Consulting</h3>
+                    <p>Cabinet de Formation, de Coaching et de Conseil.<br><em>« Révéler les potentiels. Développer les compétences. Créer de l’impact. »</em></p>
                 </div>
-                <div class="social-links">
-                    <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#about">À propos, vision et valeurs</a></li>
+                        <li><a href="#communication-orale">Communication orale</a></li>
+                        <li><a href="#leadership">Leadership</a></li>
+                        <li><a href="#entrepreneuriat">Entrepreneuriat</a></li>
+                        <li><a href="#dramatherapie-accompagnement">Dramathérapie</a></li>
+                        <li><a href="#solutions">Formation, coaching et conseil</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Centre d’Excellence DAVID, Yopougon Millionnaire, Abidjan</p>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+2250799490505">(+225) 07 99 49 05 05</a></p>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+2250574742526">(+225) 05 74 74 25 26</a></p>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+2252735975765">(+225) 27 35 97 57 65</a></p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:ezoua.consulting@outlook.com">ezoua.consulting@outlook.com</a></p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; JJK Consulting - 2025. Tous droits réservés.</p>
+                <p>&copy; <span id="currentYear">2026</span> EZOUA Consulting. Tous droits réservés. Révéler les potentiels • Développer les compétences • Créer de l’impact.</p>
             </div>
         </div>
     </footer>
 
     <!-- Bouton retour en haut -->
-    <a href="#home" class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
+    <a href="#home" class="back-to-top" id="backToTop" aria-label="Retour en haut de la page">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </a>
 
     <!-- Scripts chargés en head avec defer -->

@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const backToTop = document.querySelector('#backToTop');
     const sections = document.querySelectorAll('section');
-    const fadeElements = document.querySelectorAll('.fade-in');
     
     // Toggle menu mobile
     menuToggle.addEventListener('click', function() {
-        menuToggle.classList.toggle('active');
+        const isActive = menuToggle.classList.toggle('active');
         navMenu.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
     });
     
     // Fermer le menu mobile quand un lien est cliqué
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             menuToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
         });
     });
     
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fonction pour animer les éléments au scroll
     function fadeInElements() {
-        fadeElements.forEach(element => {
+        document.querySelectorAll('.fade-in').forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;
             
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Ajouter la classe fade-in aux éléments à animer
-    document.querySelectorAll('.service-card, .target-item, .result-card, .team-member, .about-content > div').forEach(element => {
+    document.querySelectorAll('.service-card, .target-item, .result-card, .team-member, .about-content > div, .pillar-card, .value-card, .solution-card, .why-item, .why-banner-cta, .contact-info-card, .contact-form').forEach(element => {
         element.classList.add('fade-in');
     });
     
@@ -93,23 +94,90 @@ document.addEventListener('DOMContentLoaded', function() {
     fadeInElements();
     updateActiveNavLink();
     
-    // Formulaire de contact
+    // Formulaire de contact — Traitement Asynchrone Sécurisé
     const contactForm = document.getElementById('contactForm');
+    const contactStatus = document.getElementById('contactStatus');
+    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Récupérer les valeurs du formulaire
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const honeypotInput = document.getElementById('_website_check');
             
-            // Ici, vous pourriez ajouter du code pour envoyer les données à un serveur
-            // Pour l'instant, nous affichons simplement une alerte
-            alert(`Merci ${name} pour votre message ! Nous vous contacterons bientôt à l'adresse ${email}.`);
-            
-            // Réinitialiser le formulaire
-            contactForm.reset();
+            const name = nameInput ? nameInput.value.trim() : '';
+            const email = emailInput ? emailInput.value.trim() : '';
+            const message = messageInput ? messageInput.value.trim() : '';
+            const honeypot = honeypotInput ? honeypotInput.value.trim() : '';
+
+            // Validation de base côté client
+            if (!contactForm.reportValidity() || !name || !email || !message) {
+                if (contactStatus) {
+                    contactStatus.className = 'contact-status error';
+                    contactStatus.textContent = 'Veuillez renseigner les champs obligatoires et vérifier leur format.';
+                    contactStatus.style.display = 'flex';
+                }
+                return;
+            }
+
+            // Bouton en état de chargement
+            const originalBtnContent = contactSubmitBtn ? contactSubmitBtn.innerHTML : 'Envoyer';
+            if (contactSubmitBtn) {
+                contactSubmitBtn.disabled = true;
+                contactSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> <span class="btn-text">Transmission en cours...</span>';
+            }
+            if (contactStatus) {
+                contactStatus.style.display = 'none';
+            }
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch('contact.php', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                let result = {};
+                try {
+                    result = await response.json();
+                } catch (invalidResponse) {
+                    throw new Error('Réponse invalide du serveur.');
+                }
+
+                if (response.ok && result.success === true) {
+                    if (contactStatus) {
+                        contactStatus.className = 'contact-status success';
+                        contactStatus.textContent = result.message || 'Votre demande a bien été transmise.';
+                        contactStatus.style.display = 'flex';
+                    }
+                    contactForm.reset();
+                } else {
+                    const errMsg = result.message || 'Une erreur est survenue lors de l’envoi. Veuillez réessayer.';
+                    if (contactStatus) {
+                        contactStatus.className = 'contact-status error';
+                        contactStatus.textContent = errMsg;
+                        contactStatus.style.display = 'flex';
+                    }
+                }
+            } catch (networkError) {
+                console.error('Échec de transmission du formulaire :', networkError);
+                if (contactStatus) {
+                    contactStatus.className = 'contact-status error';
+                    contactStatus.textContent = 'Impossible de joindre le serveur. Votre demande n’a pas été envoyée ; réessayez ou écrivez-nous à ezoua.consulting@outlook.com.';
+                    contactStatus.style.display = 'flex';
+                }
+            } finally {
+                if (contactSubmitBtn) {
+                    contactSubmitBtn.disabled = false;
+                    contactSubmitBtn.innerHTML = originalBtnContent;
+                }
+            }
         });
     }
     
@@ -120,9 +188,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModalBtn = document.querySelector('#appointmentModal .close-modal');
     const confirmationMessage = document.getElementById('confirmationMessage');
     const serviceSelect = document.getElementById('service');
+    let previousFocusTarget = null;
+    const appointmentDate = document.getElementById('appoint_date');
+    if (appointmentDate) {
+        appointmentDate.min = new Date().toISOString().slice(0, 10);
+    }
+
+    const currentYear = document.getElementById('currentYear');
+    if (currentYear) currentYear.textContent = new Date().getFullYear();
+
+    document.querySelectorAll('.service-discover[data-interest]').forEach(link => {
+        link.addEventListener('click', () => {
+            const interestSelect = document.getElementById('interest');
+            if (interestSelect) interestSelect.value = link.dataset.interest;
+        });
+    });
 
     function openAppointmentModal(service) {
         if (!appointmentModal) return;
+        previousFocusTarget = document.activeElement;
+        if (navMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            previousFocusTarget = menuToggle;
+        }
         // Préremplir le service si fourni
         if (service && serviceSelect) {
             // tenter de sélectionner la valeur correspondante
@@ -133,22 +223,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-    appointmentModal.classList.add('show');
-    appointmentModal.setAttribute('aria-hidden', 'false');
-    // focus sur le premier champ
-    const nameField = appointmentModal.querySelector('#appoint_name');
-    if (nameField) nameField.focus();
+        if (confirmationMessage) confirmationMessage.style.display = 'none';
+        appointmentModal.classList.add('show');
+        appointmentModal.setAttribute('aria-hidden', 'false');
+        const nameField = appointmentModal.querySelector('#appoint_name');
+        if (nameField) nameField.focus();
     }
 
     function closeAppointmentModal() {
         if (!appointmentModal) return;
-    appointmentModal.classList.remove('show');
-    appointmentModal.setAttribute('aria-hidden', 'true');
+        appointmentModal.classList.remove('show');
+        appointmentModal.setAttribute('aria-hidden', 'true');
+        if (previousFocusTarget && previousFocusTarget.isConnected) {
+            previousFocusTarget.focus();
+        }
+        previousFocusTarget = null;
     }
-
-    // debug: nombre de boutons détectés et présence du modal
-    console.log('btnAppointments count:', btnAppointments.length);
-    console.log('appointmentModal present:', !!appointmentModal);
 
     // ouvrir modal depuis chaque bouton
     if (btnAppointments.length > 0) {
@@ -156,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const svc = btn.dataset.service || '';
-                console.log('btn-appointment clicked, service=', svc);
                 openAppointmentModal(svc);
             });
         });
@@ -167,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (btn) {
                 e.preventDefault();
                 const svc = btn.dataset ? btn.dataset.service : '';
-                console.log('delegated btn-appointment click, service=', svc);
                 openAppointmentModal(svc);
             }
         });
@@ -187,8 +275,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ESC pour fermer
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && appointmentModal && appointmentModal.classList.contains('show')) {
+        if (!appointmentModal || !appointmentModal.classList.contains('show')) return;
+
+        if (e.key === 'Escape') {
             closeAppointmentModal();
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            const focusable = Array.from(appointmentModal.querySelectorAll('button:not(:disabled), input:not(:disabled), select:not(:disabled), a[href]'))
+                .filter(element => element.getClientRects().length > 0);
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         }
     });
 
@@ -205,8 +311,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Message pré-rempli
             const message = `Bonjour, je souhaite prendre un rendez-vous.\nNom : ${name}\nEmail : ${email}\nService : ${service}\nDate : ${date} \nHeure : ${time}`;
 
-            // Numéro WhatsApp fourni par l'utilisateur (format international sans espace)
-            const phone = '2250574742526';
+            // Numéro WhatsApp officiel EZOUA Consulting (format international)
+            const phone = '2250799490505';
             const waUrl = `https://api.whatsapp.com/send?phone=${encodeURIComponent(phone)}&text=${encodeURIComponent(message)}`;
 
             // Afficher confirmation puis rediriger vers WhatsApp
@@ -227,12 +333,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            if (targetId === '#' || this.classList.contains('skip-link')) return;
             
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 70,
+                    top: targetElement.offsetTop - 80,
                     behavior: 'smooth'
                 });
             }
